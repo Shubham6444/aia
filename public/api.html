@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Vision Dashboard</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6fb;
+    }
+
+    /* Header */
+    header {
+      background: #4f46e5;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      background: white;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .tab {
+      padding: 12px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 15px;
+      border-bottom: 3px solid transparent;
+      transition: 0.3s;
+    }
+
+    .tab.active {
+      border-bottom: 3px solid #4f46e5;
+      color: #4f46e5;
+      font-weight: bold;
+    }
+
+    /* Content Area */
+    .container {
+      padding: 20px;
+    }
+
+    /* Upload Box */
+    .upload-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .upload-box input {
+      margin: 15px 0;
+    }
+
+    button {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Results */
+    .result-box {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+
+<body>
+
+<header>Google Vision AI Dashboard</header>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" data-tab="ocr">OCR</div>
+  <div class="tab" data-tab="labels">Labels</div>
+  <div class="tab" data-tab="logo">Logos</div>
+  <div class="tab" data-tab="face">Faces</div>
+  <div class="tab" data-tab="landmark">Landmarks</div>
+  <div class="tab" data-tab="safe">Safe Search</div>
+</div>
+
+<div class="container">
+
+  <!-- Upload Box -->
+  <div class="upload-box">
+    <h3>Upload Image</h3>
+    <input type="file" id="imageInput" accept="image/*" />
+    <br />
+    <button id="uploadBtn" disabled>Analyze</button>
+  </div>
+
+  <!-- Result -->
+  <div id="result" class="result-box">Results will appear here...</div>
+
+</div>
+
+<script>
+  let activeTab = "ocr";
+
+  // Switch Tabs
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.onclick = () => {
+      document.querySelector(".tab.active").classList.remove("active");
+      tab.classList.add("active");
+      activeTab = tab.dataset.tab;
+    };
+  });
+
+  // Enable button when file selected
+  document.getElementById("imageInput").onchange = () => {
+    document.getElementById("uploadBtn").disabled = false;
+  };
+
+  // Analyze Image
+  document.getElementById("uploadBtn").onclick = async () => {
+    const fileInput = document.getElementById("imageInput");
+    if (!fileInput.files.length) return;
+
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    let endpoint = "";
+
+    if (activeTab === "ocr") endpoint = "/vision/ocr";
+    if (activeTab === "labels") endpoint = "/vision/labels";
+    if (activeTab === "logo") endpoint = "/vision/logo";
+    if (activeTab === "face") endpoint = "/vision/face";
+    if (activeTab === "landmark") endpoint = "/vision/landmark";
+    if (activeTab === "safe") endpoint = "/vision/safe-search";
+
+    document.getElementById("result").innerText = "Processing...";
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+
+      document.getElementById("result").innerText =
+        JSON.stringify(data, null, 2);
+    } catch (err) {
+      document.getElementById("result").innerText = "Error: " + err;
+    }
+  };
+</script>
+
+</body>
+</html>

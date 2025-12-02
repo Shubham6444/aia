@@ -1,0 +1,107 @@
+# ================================
+# Node.js / Express / Backend
+# ================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.tmp/
+.temp/
+
+# ================================
+# Environment / Secrets
+# ================================
+
+.env
+.env.local
+.env.*.local
+*.env
+
+# Never commit private keys or certificates
+*.pem
+*.key
+*.crt
+
+# ================================
+# Logs
+# ================================
+
+logs/
+*.log
+debug.log
+error.log
+
+# PM2 logs
+.pids
+*.pid
+*.seed
+*.pid.lock
+
+# ================================
+# OS files
+# ================================
+
+.DS_Store
+Thumbs.db
+
+# ================================
+# IDE & Editor
+# ================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ================================
+# WhatsApp Sessions
+# ================================
+
+.session/
+.session-* 
+auth/
+auth/*
+
+# whatsapp-web.js session folders
+WWebJS_*
+wwebjs_cache/
+wwebjs_auth/
+.wwebjs_cache/
+.wwebjs_auth/
+
+# ================================
+# Docker / Deployment
+# ================================
+
+docker-data/
+docker-volume/
+*.tar
+
+# ================================
+# Temporary Files
+# ================================
+
+*.tmp
+*.temp
+*.bak
+
+# ================================
+# Frontend Builds
+# ================================
+
+/public/build/
+/public/dist/
+/public/assets/
+
+# ================================
+# MongoDB / Database Dumps
+# ================================
+
+dump/
+*.bson
+*.gz
+
