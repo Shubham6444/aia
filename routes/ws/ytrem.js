@@ -7,7 +7,7 @@ app.use(express.json());
 
 const subscriptionsFile = "./subscriptions.json";
 // const API_KEY = "AIzaSyC45Ffq_XxxDZojO3rEE24vjDvsf0rifuw";
-const API_KEY = "";
+const API_KEY = "AIzaSyDTiixS7Yy8Ka_T21CX39biaowSJXHAqoo";
 
 // ==========================
 // Helper Functions
